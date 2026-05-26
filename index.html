@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script>
+			async function performOperation(operation) {
+				const firstNumber = document.getElementById('firstNumber').value;
+				const secondNumber = document.getElementById('secondNumber').value;
+
+				const response = await fetch(`http://localhost:3000/${operation}`, {
+					method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify({ firstNumber: firstNumber, secondNumber: secondNumber }),
+				});
+				const result = await response.json();
+
+				document.getElementById('response').innerHTML = result.result;
+			}
+		</script>
+	</head>
+	<body>
+		<input id="firstNumber" type="text" placeholder="first number" />
+		<input id="secondNumber" type="text" placeholder="second number" />
+		<button onclick="performOperation('add')">add</button>
+		<button onclick="performOperation('sub')">sub</button>
+		<button onclick="performOperation('mul')">mul</button>
+		<button onclick="performOperation('div')">div</button>
+		<div id="response "></div>
+	</body>
+</html>
