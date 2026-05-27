@@ -8,6 +8,12 @@ const users = []
 app.get('/',(req,res)=>{
     res.sendFile("/home/devanshu/Downloads/nodeLearning/auth.html")
 })
+app.get('/signup.html',(req,res)=>{
+    res.sendFile("/home/devanshu/Downloads/nodeLearning/signup.html")
+})
+app.get('/signin.html',(req,res)=>{
+    res.sendFile("/home/devanshu/Downloads/nodeLearning/signin.html")
+})
 app.post('/signup',(req,res)=>{
     const username = req.body.username
     const password = req.body.password

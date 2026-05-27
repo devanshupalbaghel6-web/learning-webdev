@@ -20,6 +20,10 @@
 			async function addTodo() {
 				await axios.post('http://localhost:3000/notes', {
 					note: document.getElementById('userNote').value,
+				},{
+					headers: {
+						token: localStorage.getItem('token')
+					}
 				});
 				const newNode = document.createElement('div');
 				newNode.innerHTML = document.getElementById('userNote').value;
@@ -31,7 +35,11 @@
 				document.getElementById('userNote').value = '';
 			}
 			async function getTodos() {
-				const response = await axios.get('http://localhost:3000/notes');
+				const response = await axios.get('http://localhost:3000/notes',{
+					headers: {
+						token: localStorage.getItem('token')
+					}
+				});
 				const notes = response.data.notes;
 				console.log(response.data.notes);
 				document.getElementById('notes').innerHTML = '';
