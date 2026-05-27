@@ -52,25 +52,25 @@ app.post('/signin',(req,res)=>{
     })
 })
 
-app.get('/users',(req,res)=>{
-    const token = req.headers.token
-    if(!token){
-        res.status(403).send({
-            message: "you are not signed in!"
-        })
-    }
-    const decoded = jwt.verify(token,"devanshu123")
-    const username = decoded.username
-    if(!username){
-        res.status(403).json({
-            message: "malformed token."
-        })
-        return;
-    }
-    res.json({
-        total: users.username 
-    })
-})
+// app.get('/users',(req,res)=>{
+//     const token = req.headers.token
+//     if(!token){
+//         res.status(403).send({
+//             message: "you are not signed in!"
+//         })
+//     }
+//     const decoded = jwt.verify(token,"devanshu123")
+//     const username = decoded.username
+//     if(!username){
+//         res.status(403).json({
+//             message: "malformed token."
+//         })
+//         return;
+//     }
+//     res.json({
+//         total: users.username 
+//     })
+// })
 app.post('/notes',(req,res)=>{
 
     const token = req.headers.token

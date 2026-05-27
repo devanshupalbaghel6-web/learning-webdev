@@ -45,7 +45,7 @@
 				document.getElementById('notes').innerHTML = '';
 				for (let i = 0; i < response.data.notes.length; i++) {
 					const noteElement = document.createElement('div');
-					noteElement.innerHTML = notes[i];
+					noteElement.innerHTML = notes[i].note;
 					noteElement.setAttribute(
 						'style',
 						'border: 2px solid black; padding: 10px; margin: 10px',
