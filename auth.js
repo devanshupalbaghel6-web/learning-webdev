@@ -101,7 +101,7 @@ app.get('/notes',(req,res)=>{
         })
         return;
     }
-    const userNote = users.filter((note)=>note.username===username)
+    const userNote = notes.filter((note)=>note.username===username)
 
     res.json({
         notes: userNote
