@@ -21,7 +21,11 @@ app.post('/signup',(req,res)=>{
         username: username,
         password: password
     })
+    const token = jwt.sign({
+        username:username
+    },"devanshu123")
     res.json({
+        token: token,
         message: "you have signed up!"
     })
 })
@@ -43,7 +47,7 @@ app.post('/signin',(req,res)=>{
 })
 
 app.get('/users',(req,res)=>{
-    const token = req.header.token
+    const token = req.headers.token
     if(!token){
         res.status(403).send({
             message: "you are not signed in!"
@@ -63,7 +67,7 @@ app.get('/users',(req,res)=>{
 })
 app.post('/notes',(req,res)=>{
 
-    const token = req.header.token
+    const token = req.headers.token
     if(!token){
         res.status(403).send({
             message: "you are not signed in!"
@@ -87,7 +91,7 @@ app.post('/notes',(req,res)=>{
 })
 app.get('/notes',(req,res)=>{
 
-     const token = req.header.token
+     const token = req.headers.token
     if(!token){
         res.status(403).send({
             message: "you are not signed in!"
