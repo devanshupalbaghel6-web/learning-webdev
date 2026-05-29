@@ -1,48 +1,66 @@
 const express = require('express');
-const users =[{
-    id: 1,
-    username: "devanshu",
-    password: "123123"
-}]
-const organisations = [{
-    id:1,
-    title: "devanshu's org",
-    description: "This is devanshu's org",
-    admin: "devanshu",
-    members: [1]
-}]
-const boards = [{
-    id: 1,
-    title: "devanshu's board",
-    description: "This is devanshu's board",
-    organisation: "devanshu's org",
-    members: [1]
-}]
-const issues = [{
-    id: 1,
-    title: "devanshu's issue",
-    description: "This is devanshu's issue",
-    board: "devanshu's board",
-    assignee: 1
-}]
-const app = express()
+const jwt = require('jsonwebtoken');
+const app = express();
+app.use(express.json())
+let user_id = 1
+let organisation_id = 1
+
+const users = [];
+const organisations = [];
+const boards = [];
+const issues = [];
+
 //create end points
-app.post('/signin', (req, res) => {})
-app.post('/signup', (req, res) => {})
-app.post('/organisations', (req, res) => {})
-app.post('/add-member-to-organisation', (req, res) => {})
-app.post('/boards', (req, res) => {})
-app.post('/issues', (req, res) => {})
+app.post('/signup', (req, res) => {
+    const username = req.body.username
+    const password = req.body.password
+    const userExists = users.find((user)=>user.username === username)
+    if(userExists){
+        res.status(403).json({
+            message: "user already exists!"
+        })
+        return
+    }
+    users.push({
+        username: username,
+        password: password,
+        id: user_id++
+    })
+    res.json({
+        message: "you have signed up successfully!!!"
+    })
+});
+app.post('/signin', (req, res) => {
+    const username = req.body.username
+    const password = req.body.password
+    const userExists = users.find((user)=>user.username === username && user.password === password)
+    if(!userExists){
+        res.status(403).json({
+            message: "Incorrect id or password!!"
+        })
+        return
+    }
+    // create jwt for the user
+    const token = jwt.sign({
+        userId:userExists.id
+    },"devanshu123")
+    res.json({
+        token:token,
+        message: "you have signed in successfully!!!"
+    })
+});
+app.post('/organisations', (req, res) => {});
+app.post('/add-member-to-organisation', (req, res) => {});
+app.post('/boards', (req, res) => {});
+app.post('/issues', (req, res) => {});
 // get end points
-app.get('/organisations', (req, res) => {})
-app.get('/boards', (req, res) => {})
-app.get('/issues', (req, res) => {})
-app.get('/users', (req, res) => {})
+app.get('/organisations', (req, res) => {});
+app.get('/boards', (req, res) => {});
+app.get('/issues', (req, res) => {});
+app.get('/users', (req, res) => {});
 //update
-app.put('/issues', (req, res) => {})
+app.put('/issues', (req, res) => {});
 //delete
-app.delete('/users', (req, res) => {})
+app.delete('/users', (req, res) => {});
 
-
-
-app.listen(3000)
+app.listen(3000);
